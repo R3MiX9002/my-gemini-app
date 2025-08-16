@@ -1,0 +1,31 @@
+</script>
+
+   <!-- IndexedDB Script -->
+   <script>
+       let db;
+
+       function openIndexedDB() {
+           const request = indexedDB.open('KiMonsterDB', 1);
+
+           request.onerror = function(event) {
+               console.error('IndexedDB error:', event.target.errorCode);
+           };
+
+           request.onsuccess = function(event) {
+               db = event.target.result;
+               console.log('IndexedDB opened successfully');
+           };
+
+           request.onupgradeneeded = function(event) {
+               const db = event.target.result;
+               if (!db.objectStoreNames.contains('aiResponses')) {
+                   db.createObjectStore('aiResponses', { keyPath: 'id', autoIncrement: true });
+                   console.log('Object store aiResponses created');
+               }
+           };
+       }
+
+       openIndexedDB();
+   </script>
+</body>
+</html>

@@ -2,7 +2,7 @@ import json
 import os
 
 from langchain_core.messages import HumanMessage
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAI
 from flask import Flask, jsonify, request, send_file, send_from_directory
 
 # 🔥 FILL THIS OUT FIRST! 🔥
@@ -10,6 +10,7 @@ from flask import Flask, jsonify, request, send_file, send_from_directory
 # - Selecting "Add Gemini API" in the "Firebase Studio" panel in the sidebar
 # - Or by visiting https://g.co/ai/idxGetGeminiKey
 os.environ["GOOGLE_API_KEY"] = "TODO"; 
+from src.services import search_service
 
 app = Flask(__name__)
 
@@ -45,6 +46,44 @@ def generate_api():
         except Exception as e:
             return jsonify({ "error": str(e) })
 
+# Flask route for Yahoo search
+@app.route("/search/yahoo", methods=["GET"])
+def search_yahoo_api():
+    query = request.args.get('query')
+    if not query:
+        return jsonify({"error": "Query parameter is missing"}), 400
+    
+    results = search_service.search_yahoo(query)
+    if results is None:
+        return jsonify({"error": "Failed to perform Yahoo search"}), 500
+    
+    return jsonify(results)
+
+# Flask route for Bing search
+@app.route("/search/bing", methods=["GET"])
+def search_bing_api():
+    query = request.args.get('query')
+    if not query:
+        return jsonify({"error": "Query parameter is missing"}), 400
+    
+    results = search_service.search_bing(query)
+    if results is None:
+        return jsonify({"error": "Failed to perform Bing search"}), 500
+    
+    return jsonify(results)
+
+# Function to search for latest AI generator features and improvements
+def search_latest_ai_features(query):
+    # Use both search services to gather information
+    yahoo_results = search_service.search_yahoo(f"latest AI image video generator features {query} 1K 4K 8K")
+    bing_results = search_service.search_bing(f"new AI multimedia generation improvements {query} high resolution")
+    
+    # Combine or process results as needed. This is a simple combination example.
+    combined_results = {
+        "yahoo": yahoo_results,
+        "bing": bing_results
+    }
+    return combined_results
 
 @app.route('/<path:path>')
 def serve_static(path):
