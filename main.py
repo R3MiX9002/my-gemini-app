@@ -85,6 +85,19 @@ def search_latest_ai_features(query):
     }
     return combined_results
 
+@app.route("/api/save-to-drive", methods=["POST"])
+def save_to_drive_api():
+    if request.method == "POST":
+        req_body = request.get_json()
+        content = req_body.get("content")
+        access_token = req_body.get("accessToken")
+
+        if not content or not access_token:
+            return jsonify({"error": "Missing content or accessToken"}), 400
+
+        print(f"Content: {content}")
+        print(f"Access Token: {access_token}")
+
 @app.route('/<path:path>')
 def serve_static(path):
     return send_from_directory('web', path)

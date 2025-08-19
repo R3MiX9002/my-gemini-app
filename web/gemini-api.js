@@ -1,4 +1,6 @@
 /**
+ * @file Handles interaction with the Gemini API through the backend.
+ *
  * Calls the given Gemini model with the given image and/or text
  * parts, streaming output (as a generator function).
  */
@@ -68,4 +70,41 @@ async function* streamResponseChunks(response) {
   }
 
   yield* processBuffer(true);
+}
+
+// --- Google Sign-In for Drive Integration ---
+
+// Assuming Firebase is initialized elsewhere in the application
+// import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
+// Get a reference to the Google Sign-In button
+const googleSigninButton = document.getElementById('google-signin-button');
+
+if (googleSigninButton) {
+  googleSigninButton.addEventListener('click', () => {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
+    // Request the necessary scope for Google Drive access
+    provider.addScope('https://www.googleapis.com/auth/drive');
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+
+        // The signed-in user info.
+        const user = result.user;
+
+        console.log("User signed in:", user);
+        console.log("Google Access Token:", accessToken);
+
+        // TODO: Store or use the accessToken for Google Drive API calls
+
+      })
+      .catch((error) => {
+        console.error("Google Sign-In Error:", error.code, error.message);
+      });
+  });
 }
