@@ -142,3 +142,51 @@ button:focus-visible {
 button:hover {
   opacity: 0.95;
 }
+
+.vista-panel {
+  margin: 24px auto;
+  padding: 24px;
+  max-width: 600px; /* Adjust max-width as needed */
+  border-radius: 15px;
+  /* Applying the vista-glass styles */
+  background: var(--vista-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--vista-border);
+}
+
+.function-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Allows buttons to wrap to the next line */
+  gap: 10px; /* Space between buttons */
+  justify-content: center; /* Center buttons horizontally */
+}
+
+.file-upload-area {
+  margin: 24px auto; /* Center the block and add vertical margin */
+  padding: 30px; /* Add padding inside the area */
+  border: 2px dashed #ccc; /* Dashed border to indicate a drop zone */
+  border-radius: 10px; /* Rounded corners */
+  text-align: center; /* Center text and content */
+  cursor: pointer; /* Indicate it's clickable */
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition for hover */
+  min-height: 150px; /* Minimum height for visibility */
+  display: flex; /* Use flexbox for centering content vertically */
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  max-width: 500px; /* Limit the width */
+}
+
+.file-upload-area:hover {
+  background-color: #f0f0f0; /* Light background on hover */
+  border-color: #aaa; /* Darker border on hover */
+}
+
+.file-upload-area input[type="file"] {
+  display: none; /* Hide the actual file input */
+}
+
+.file-upload-area.drag-over {
+  background-color: #e0e0e0; /* Lighter background when dragging over */
+  border-color: var(--accent-color); /* Highlight border with accent color */
+}

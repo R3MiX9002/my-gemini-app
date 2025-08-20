@@ -9,34 +9,56 @@
 </head>
 
 <body>
-  <main>
-    <h1>Baking with the Gemini API</h1>
-    <form>
-      <div class="image-picker">
-        <label class="image-choice">
-          <input type="radio" checked name="chosen-image" value="/baked_goods_1.jpg">
-          <img src="/baked_goods_1.jpg">
-        </label>
-        <label class="image-choice">
-          <input type="radio" name="chosen-image" value="/baked_goods_2.jpg">
-          <img src="/baked_goods_2.jpg">
-        </label>
-        <label class="image-choice">
-          <input type="radio" name="chosen-image" value="/baked_goods_3.jpg">
-          <img src="/baked_goods_3.jpg">
-        </label>
+ <div class="main-container">
+ <main>
+ <h1>Baking with the Gemini API</h1>
+ <form>
+ <div class="image-picker">
+ <label class="image-choice">
+ <input type="radio" checked name="chosen-image" value="/baked_goods_1.jpg">
+ <img src="/baked_goods_1.jpg">
+ </label>
+ <label class="image-choice">
+ <input type="radio" name="chosen-image" value="/baked_goods_2.jpg">
+ <img src="/baked_goods_2.jpg">
+ </label>
+ <label class="image-choice">
+ <input type="radio" name="chosen-image" value="/baked_goods_3.jpg">
+ <img src="/baked_goods_3.jpg">
+ </label>
+ </div>
+ <div class="prompt-box">
+ <label>
+ <input name="prompt" placeholder="Enter instructions here" type="text"
+ value="Provide an example recipe for the baked goods in the image">
+ </label>
+ <button type="submit">Go</button>
+ </div>
+ </form>
+ <p class="output">(Results will appear here)</p>
       </div>
-      <div class="prompt-box">
-        <label>
-          <input name="prompt" placeholder="Enter instructions here" type="text"
-            value="Provide an example recipe for the baked goods in the image">
-        </label>
-        <button type="submit">Go</button>
-      </div>
-    </form>
-    <p class="output">(Results will appear here)</p>
-  </main>
-  <button id="google-signin-button">Sign in with Google</button>
+ <div class="vista-panel">
+ <p>Select Function:</p>
+ <div class="function-buttons">
+ <button id="text-to-image-button">Text to Image</button>
+ <button id="image-to-image-button">Image to Image</button>
+ <button id="video-to-image-button">Video to Image</button>
+ <button id="text-to-video-button">Text to Video</button>
+ <button id="image-to-animation-button">Image to Animation</button>
+ <button id="image-to-video-button">Image to Video</button>
+ <button id="text-to-animation-button">Text to Animation</button>
+ <button id="2d-to-3d-button">2D to 3D Conversion</button>
+ <button id="google-signin-button">Sign in with Google</button>
+ </div>
+ </div>
+ </main>
+
+ <div class="file-upload-area">
+ <p>Drag and drop files here or click to select</p>
+ <input type="file" id="file-input" multiple>
+ <label for="file-input" class="file-upload-label">Select Files</label>
+ </div>
+
 
   <script src="https://unpkg.com/markdown-it@8.4.2/dist/markdown-it.min.js"></script>
   <script src="https://unpkg.com/base64-js@1.3.0/base64js.min.js"></script>

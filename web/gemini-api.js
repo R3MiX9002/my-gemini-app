@@ -108,3 +108,66 @@ if (googleSigninButton) {
       });
   });
 }
+
+// --- File Upload Handling ---
+
+// Get references to the file upload area and input
+const fileUploadArea = document.querySelector('.file-upload-area');
+const fileInput = document.getElementById('file-input');
+
+// Add click listener to the upload area to trigger file input click
+if (fileUploadArea && fileInput) {
+  fileUploadArea.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  // Add drag and drop listeners
+  fileUploadArea.addEventListener('dragover', (event) => {
+    event.preventDefault(); // Prevent default to allow drop
+    fileUploadArea.classList.add('drag-over');
+  });
+
+  fileUploadArea.addEventListener('dragleave', (event) => {
+    event.preventDefault(); // Prevent default
+    fileUploadArea.classList.remove('drag-over');
+  });
+
+  fileUploadArea.addEventListener('drop', (event) => {
+    event.preventDefault(); // Prevent default
+    fileUploadArea.classList.remove('drag-over');
+    console.log('Dropped files:', event.dataTransfer.files);
+  });
+
+  fileUploadArea.addEventListener('drop', (event) => {
+    event.preventDefault(); // Prevent default
+    fileUploadArea.classList.remove('drag-over');
+    const files = event.dataTransfer.files;
+    uploadFiles(files); // Call the new upload function
+  });
+
+  // Add change listener to the file input to log selected files
+  fileInput.addEventListener('change', (event) => {
+    console.log('Selected files:', event.target.files);
+    const files = event.target.files;
+    uploadFiles(files); // Call the new upload function
+  });
+}
+
+// Function to upload files to the backend
+async function uploadFiles(files) {
+  const formData = new FormData();
+  for (let i = 0; i < files.length; i++) {
+    formData.append('files', files[i]); // 'files' is the field name the backend will expect
+  }
+
+  try {
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    });
+    const result = await response.json();
+    console.log('Upload response:', result);
+  } catch (error) {
+    console.error('Upload error:', error);
+  }
+}
